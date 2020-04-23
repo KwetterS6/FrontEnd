@@ -34,7 +34,7 @@
           
 
     <div class="btn-group" style="margin-right: 10px;">
-      <span class="btn btn-warning btn-xs" v-on:click="registerAccount()" >{{('Register')}}</span>
+      <span class="btn btn-success btn-xs" v-on:click="registerAccount()" >{{('Register')}}</span>
     </div>
   </div>
 </template>

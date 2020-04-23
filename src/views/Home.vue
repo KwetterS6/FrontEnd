@@ -2,38 +2,68 @@
   <div class="contain">
     <p>Welcome to Kwetter! please login or register!</p>
     <div class="form-group">
-            <label for="inputName">{{('Name')}}:</label>
+      <label for="inputEmail">{{('Email Address')}}:</label>
+      <input
+        v-model="email"
+        type="email"
+        class="form-control"
+        id="inputEmail"
+        v-bind:placeholder="('email')"
+      />
+    </div>
+    <div class="form-group">
+            <label for="unputPassword">{{('Password')}}:</label>
             <input
-              v-model="name"
-              type="text"
+              v-model="password"
+              type="password"
               class="form-control"
-              id="inputName"
-              v-bind:placeholder="('name')"
+              id="inputPassword"
+              v-bind:placeholder="('password')"
             >
           </div>
-          <div class="form-group">
-            <label for="inputEmail">{{('Email Address')}}:</label>
-            <input
-              v-model="email"
-              type="email"
-              class="form-control"
-              id="inputEmail"
-              v-bind:placeholder="('email')"
-            >
-          </div>
+          
     <div class="btn-group" style="margin-right: 10px;">
-      <router-link class="btn btn-success" to="/login">{{('Login')}}</router-link>
+       <span class="btn btn-success btn-xs" v-on:click="login()" >{{('Login')}}</span>
     </div>
     <div class="btn-group" style="margin-right: 10px;">
-      <router-link class="btn btn-success" to="/Register">{{('register')}}</router-link>
+      <router-link class="btn btn-success" to="/Register">{{('Register')}}</router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home"
-};
+  name: "Home",
+
+methods: 
+{
+  async login()
+  {
+    console.log("test")
+    
+    let options = 
+    {
+      method: "post",
+      headers: 
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
+    }
+
+    let response = await fetch("http://localhost:5000/user/login", options)
+
+    let data = await response.json()
+    console.log(data)
+    
+  }
+}
+}
 </script>
 
 <style scoped>
