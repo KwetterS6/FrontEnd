@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: userservice
+  name: frontend
   namespace: kwetter-development
 spec:
   selector:
-    app: userservice
+    app: frontend
   ports:
   - port: 80
     targetPort: 80
