@@ -62,7 +62,7 @@ jobs:
         env:
           CONTAINER_IMAGE: docker.pkg.github.com/kwetters6/frontend/frontend:${{ github.sha }}
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}"| docker login docker.pkg.github.com -u ${{ secrets.DOCKER_GITHUB_USERNAME }} --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}"| docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} --password-stdin
           docker build -t $CONTAINER_IMAGE .
           docker push $CONTAINER_IMAGE
   deploy:
@@ -86,7 +86,7 @@ jobs:
         with:
           namespace: kwetter-development
           container-registry-url: docker.pkg.github.com
-          container-registry-username: ${{ secrets.DOCKER_GITHUB_USERNAME }}
+          container-registry-username: ${{ secrets.DOCKER_USER }}
           container-registry-password: ${{ secrets.GITHUB_TOKEN }}
           secret-name: github-docker-registry
 
