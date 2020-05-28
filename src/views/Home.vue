@@ -39,7 +39,7 @@ methods:
 {
   async login()
   {
-    console.log("test")
+    console.log("login")
     
     let options = 
     {
@@ -59,8 +59,8 @@ methods:
     let response = await fetch("http://localhost:5000/user/login", options)
 
     let data = await response.json()
-    console.log(data)
-    
+    localStorage.setItem("authenticationToken", data.user.token)
+    console.log(localStorage.getItem("authenticationToken"))
   }
 }
 }
