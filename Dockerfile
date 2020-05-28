@@ -1,6 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1.3-bionic
-
-WORKDIR /app
-COPY /* ./
-
-ENTRYPOINT ["dotnet", "FrontEnd.dll"]
+FROM nginx:stable-alpine
+COPY /build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
