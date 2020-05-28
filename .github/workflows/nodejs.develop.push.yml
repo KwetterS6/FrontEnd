@@ -96,6 +96,7 @@ jobs:
           manifests: |
             ./kube_develop/kube_deployment.yaml
             ./kube_develop/kube_service.yaml
+            ./kube_develop/kube_ingress.yaml
             
           images: |
             docker.pkg.github.com/kwetters6/frontend/frontend:${{ github.sha }}
