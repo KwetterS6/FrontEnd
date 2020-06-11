@@ -16,7 +16,7 @@
           <div v-for="kwet in kwets" :key="kwet.message">
             <div class="recentkwets">
               <b-card
-                img-src="https://placekitten.com/150/150"
+                img-src="https://placedog.net/150/150"
                 img-alt="Card image"
                 img-left
                 class="mb-3"
@@ -50,7 +50,7 @@ export default {
       const requestOptions = {
         method: "GET"
       };
-      let response = await fetch("http://localhost:5002/kwet/" + this.user.id, requestOptions);
+      let response = await fetch("https://kwet.woutervandenboorn.software/kwet/" + this.user.id, requestOptions);
       let body = await response.json();
       this.kwets = body;
     }
