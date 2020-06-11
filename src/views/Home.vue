@@ -34,13 +34,11 @@
 <script>
 export default {
   name: "Home",
-
 methods: 
 {
   async login()
   {
     console.log("login")
-    
     let options = 
     {
       method: "post",
@@ -56,11 +54,12 @@ methods:
       })
     }
 
-    let response = await fetch("http://localhost:5000/user/login", options)
-
+    let response = await fetch("https://userservice.development.kwetter.nl:5001/user/login", options)
     let data = await response.json()
-    localStorage.setItem("authenticationToken", data.user.token)
-    console.log(localStorage.getItem("authenticationToken"))
+    if(response.ok) {
+      localStorage.setItem("user", JSON.stringify(data.user))
+      this.$router.push('Kwetter')
+    }
   }
 }
 }

@@ -31,7 +31,7 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#/Profile">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item v-on:click="Logout()">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -69,7 +69,12 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    Logout(){
+      console.log('Logging Out')
+      localStorage.clear();
+    }
+  },
   mounted: {}
 };
 </script>
