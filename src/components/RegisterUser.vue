@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         async registerAccount(){
-            fetch("http://userservice.woutervandenboorn.software/user/", 
+            fetch("https://userservice.woutervandenboorn.software/user/", 
             {
             mode: 'cors',
             method: "post",

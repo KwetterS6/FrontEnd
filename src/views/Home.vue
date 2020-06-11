@@ -54,7 +54,7 @@ methods:
       })
     }
 
-    let response = await fetch("http://userservice.woutervandenboorn.software/user/login", options)
+    let response = await fetch("https://userservice.woutervandenboorn.software/user/login", options)
     let data = await response.json()
     if(response.ok) {
       localStorage.setItem("user", JSON.stringify(data.user))
