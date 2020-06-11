@@ -54,13 +54,13 @@ methods:
       })
     }
 
-    let response = await fetch("https://userservice.development.kwetter.nl:5001/user/login", options)
+    let response = await fetch("https://userservice.development.kwetter.nl/user/login", options)
     let data = await response.json()
     if(response.ok) {
       localStorage.setItem("user", JSON.stringify(data.user))
       this.$router.push('Kwetter')
     }
-  }
+  } 
 }
 }
 </script>
