@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         async registerAccount(){
-            fetch("https://userservice.development.kwetter.nl/user/", 
+            fetch("https://userservice.woutervandenboorn.software/user/", 
             {
             method: "post",
             headers: 
