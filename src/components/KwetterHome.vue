@@ -29,9 +29,17 @@
                 align="left"
               >
                 <b-card-text>{{kwet.message}}</b-card-text>
-                <span class="btn btn-primary btn-xs" v-if="containsUser(kwet)" v-on:click="placeLike(kwet)">{{(kwet.likes.length + ' Like(s)')}}</span>
+                <span
+                  class="btn btn-primary btn-xs"
+                  v-if="containsUser(kwet)"
+                  v-on:click="placeLike(kwet)"
+                >{{(kwet.likes.length + ' Like(s)')}}</span>
 
-                <span class="btn btn-success btn-xs" v-else v-on:click="removeLike(kwet)">{{(kwet.likes.length + ' Like(s)')}}</span>
+                <span
+                  class="btn btn-success btn-xs"
+                  v-else
+                  v-on:click="removeLike(kwet)"
+                >{{(kwet.likes.length + ' Like(s)')}}</span>
               </b-card>
             </div>
           </div>
@@ -53,9 +61,9 @@ export default {
     };
   },
   methods: {
-    async placeKwet(){
-      console.log('placing kwets')
-      var user = JSON.parse(localStorage.getItem('user'))
+    async placeKwet() {
+      console.log("placing kwets");
+      var user = JSON.parse(localStorage.getItem("user"));
       const requestOptions = {
         method: "POST",
         body: JSON.stringify({
@@ -64,13 +72,14 @@ export default {
           Message: this.text
         }),
         headers: {
-        'Content-Type': 'application/json',
-        },
-      }
+          "Content-Type": "application/json"
+        }
+      };
       await fetch("http://localhost:5002/kwet", requestOptions);
     },
+
     async getKwets() {
-      console.log('getting kwets')
+      console.log("getting kwets");
       const requestOptions = {
         method: "GET"
       };
@@ -78,25 +87,42 @@ export default {
       let body = await response.json();
       this.kwets = body;
     },
-    async placeLike(kwet){
-      console.log('placing Likes')
-      var user = JSON.parse(localStorage.getItem('user'))
+
+    async placeLike(kwet) {
+      console.log("placing Likes");
+      var user = JSON.parse(localStorage.getItem("user"));
       const requestOptions = {
         method: "POST",
         body: JSON.stringify({
           Id: user.id,
           UserName: user.name,
           KwetId: kwet.kwetId
-          
         }),
         headers: {
-        'Content-Type': 'application/json',
-        },
-      }
+          "Content-Type": "application/json"
+        }
+      };
       await fetch("http://localhost:5002/kwet/placeLike", requestOptions);
     },
-    containsUser(kwet){
-      var user = JSON.parse(localStorage.getItem('user'))
+
+    async removeLike(kwet) {
+      var user = JSON.parse(localStorage.getItem("user"));
+      const requestOptions = {
+        method: "POST",
+        body: JSON.stringify({
+          Id: user.id,
+          UserName: user.name,
+          KwetId: kwet.kwetId
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      await fetch("http://localhost:5002/kwet/removeLike", requestOptions);
+    },
+
+    containsUser(kwet) {
+      var user = JSON.parse(localStorage.getItem("user"));
       if (kwet.likes.some(e => e.userId === user.id)) {
         return false;
       }
@@ -114,8 +140,9 @@ export default {
       }
     }
   },
-   async mounted() {
-      await this.getKwets();
-    }
+  
+  async mounted() {
+    await this.getKwets();
+  }
 };
 </script>
