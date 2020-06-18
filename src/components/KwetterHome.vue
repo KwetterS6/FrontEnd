@@ -62,7 +62,7 @@
                 :sub-title="kwet.timeStamp"
                 align="left"
               >
-                <b-card-text>{{kwet.message}}</b-card-text>
+                <b-card-text class="wrapper">{{kwet.message}}</b-card-text>
                 <span
                   class="btn btn-primary btn-xs"
                   v-if="containsUser(kwet)"
@@ -112,12 +112,13 @@ export default {
           Message: this.text
         }),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "Authorization": user.token
         }
       };
       try {
         var response = await fetch(
-          "https://kwet.woutervandenboorn.software/kwet",
+          "http://localhost:5002/kwet",
           requestOptions
         );
         if (response.ok == false) {
