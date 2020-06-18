@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
+import JwPagination from 'jw-vue-pagination';
+
 
 
 Sentry.init({
@@ -15,6 +17,8 @@ Sentry.init({
 
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
+Vue.component('jw-pagination', JwPagination);
+
 
 new Vue({
   router,
