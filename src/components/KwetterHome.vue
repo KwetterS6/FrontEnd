@@ -117,7 +117,7 @@ export default {
       };
       try {
         var response = await fetch(
-          "http://localhost:5002/kwet",
+          "https://kwet.woutervandenboorn.software/kwet",
           requestOptions
         );
         if (response.ok == false) {
@@ -135,7 +135,7 @@ export default {
         method: "GET"
       };
       try{
-      let response = await fetch("http://localhost:5002/kwet", requestOptions);
+      let response = await fetch("https://kwet.woutervandenboorn.software/kwet/", requestOptions);
       if (await response.ok == false){throw response.status}
       let body = await response.json();
       this.kwets = body;
@@ -158,7 +158,7 @@ export default {
           "Content-Type": "application/json"
         }
       };
-      await fetch("http://localhost:5002/kwet/placeLike", requestOptions);
+      await fetch("https://kwet.woutervandenboorn.software/kwet/placeLike", requestOptions);
 
       for (var i = 0; i < this.kwets.length; i++) {
         if (this.kwets[i].kwetId === kwet.kwetId) {
@@ -183,7 +183,7 @@ export default {
           "Content-Type": "application/json"
         }
       };
-      await fetch("http://localhost:5002/kwet/removeLike", requestOptions);
+      await fetch("https://kwet.woutervandenboorn.software/kwet/removeLike", requestOptions);
 
       for (var i = 0; i < this.kwets.length; i++) {
         for (var x = 0; x < this.kwets[i].likes.length; i++) {
