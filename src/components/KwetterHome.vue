@@ -11,13 +11,47 @@
     <br />
     <span>{{ remaincharactersText }}</span>
     <div class="btn-group" style="margin: 25px 25px; ">
-      <span class="btn btn-success btn-xs" v-on:click="placeKwet()">{{('Kwet!')}}</span>
+      <button
+        type="button"
+        class="btn btn-success btn-xs"
+        v-if="remaincharactersText != 'Exceeded 180 characters limit.'"
+        v-on:click="placeKwet()"
+      >{{('Kwet!')}}</button>
+
+      <button
+        type="button"
+        class="btn btn-warning btn-xs"
+        disabled
+        v-else
+      >{{('To much Characters!')}}</button>
     </div>
+
+    <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="alertPlaceKwetNotPossible"
+      @dismissed="alertPlaceKwetNotPossible=false"
+    >Placing kwets Failed, please try again later.</b-alert>
+     <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="alertGetKwetsNotPossible"
+      @dismissed="alertGetKwetsNotPossible=false"
+    >Getting kwets Failed, please try again later.</b-alert>
+     <b-alert
+      variant="danger"
+      dismissible
+      fade
+      :show="alertLikeKwetsNotPossible"
+      @dismissed="alertLikeKwetsNotPossible=false"
+    >Liking kwets Failed, please try again later.</b-alert>
 
     <div>
       <b-overlay rounded="sm">
         <b-card title="Recent Kwets">
-          <div v-for="kwet in kwets" :key="kwet.message">
+          <div v-for="kwet in pageOfItems" :key="kwet.message">
             <div class="recentkwets">
               <b-card
                 img-src="https://placedog.net/150/150"
@@ -43,6 +77,9 @@
               </b-card>
             </div>
           </div>
+          <div class="card-footer pb-0 pt-3">
+            <jw-pagination :items="kwets" @changePage="onChangePage"></jw-pagination>
+          </div>
         </b-card>
       </b-overlay>
     </div>
@@ -57,12 +94,15 @@ export default {
       text: "",
       maxcharacter: 180,
       remaincharactersText: "Remaining 180 characters.",
-      kwets: []
+      kwets: [],
+      alertPlaceKwetNotPossible: false,
+      alertGetKwetsNotPossible: false,
+      alertLikeKwetsNotPossible: false,
+      pageOfItems: []
     };
   },
   methods: {
     async placeKwet() {
-      console.log("placing kwets");
       var user = JSON.parse(localStorage.getItem("user"));
       const requestOptions = {
         method: "POST",
@@ -75,7 +115,18 @@ export default {
           "Content-Type": "application/json"
         }
       };
-      await fetch("http://localhost:5002/kwet", requestOptions);
+      try {
+        var response = await fetch(
+          "http://localhost:5002/kwet",
+          requestOptions
+        );
+        if (response.ok == false) {
+          throw response.status;
+        }
+        this.getKwets()
+      } catch {
+        this.alertPlaceKwetNotPossible = true;
+      }
     },
 
     async getKwets() {
@@ -83,9 +134,14 @@ export default {
       const requestOptions = {
         method: "GET"
       };
+      try{
       let response = await fetch("http://localhost:5002/kwet", requestOptions);
+      if (await response.ok == false){throw response.status}
       let body = await response.json();
       this.kwets = body;
+      }
+      
+      catch{this.alertGetKwetsNotPossible}
     },
 
     async placeLike(kwet) {
@@ -103,6 +159,15 @@ export default {
         }
       };
       await fetch("http://localhost:5002/kwet/placeLike", requestOptions);
+
+      for (var i = 0; i < this.kwets.length; i++) {
+        if (this.kwets[i].kwetId === kwet.kwetId) {
+          this.kwets[i].likes = [
+            ...this.kwets[i].likes,
+            { userId: user.id, Name: user.name }
+          ];
+        }
+      }
     },
 
     async removeLike(kwet) {
@@ -119,6 +184,17 @@ export default {
         }
       };
       await fetch("http://localhost:5002/kwet/removeLike", requestOptions);
+
+      for (var i = 0; i < this.kwets.length; i++) {
+        for (var x = 0; x < this.kwets[i].likes.length; i++) {
+          if (
+            this.kwets[i].likes[x].userId === user.id &&
+            this.kwets[i].kwetId === kwet.kwetId
+          ) {
+            this.kwets[i].likes.splice(x, 1);
+          }
+        }
+      }
     },
 
     containsUser(kwet) {
@@ -127,6 +203,10 @@ export default {
         return false;
       }
       return true;
+    },
+    onChangePage(pageOfItems) {
+      // update page of items
+      this.pageOfItems = pageOfItems;
     },
 
     remaincharCount: function() {
@@ -140,7 +220,7 @@ export default {
       }
     }
   },
-  
+
   async mounted() {
     await this.getKwets();
   }
