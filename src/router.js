@@ -7,7 +7,7 @@ import Kwetter from './views/Kwetter.vue'
 
 
 Vue.use(Router);
-Vue.config.silent = true;
+
 export default new Router({
     routes: [
         {

@@ -1,20 +1,6 @@
 <template>
   <div class="contain">
     <p>Welcome to Kwetter! please login or register!</p>
-    <b-alert
-      variant="danger"
-      dismissible
-      fade
-      :show="stillLoggedIn"
-      @dismissed="stillLoggedIn=false"
-    >You have to log out begore logging in!.</b-alert>
-    <b-alert
-      variant="danger"
-      dismissible
-      fade
-      :show="loginFailed"
-      @dismissed="loginFailed=false"
-    >Incorrect credentials, please check your email and password.</b-alert>
     <div class="form-group">
       <label for="inputEmail">{{('Email Address')}}:</label>
       <input
@@ -48,20 +34,13 @@
 <script>
 export default {
   name: "Home",
-  data() {
-    return {
-      loginFailed: false,
-      stillLoggedIn: false
-      };
-  },
+
 methods: 
 {
   async login()
   {
-    var user = JSON.parse(localStorage.getItem("user"));
-    try{
-      console.log(user)
-      if (user != null){throw user}
+    console.log("login")
+    
     let options = 
     {
       method: "post",
@@ -77,17 +56,12 @@ methods:
       })
     }
 
-    let response = await fetch("https://userservice.woutervandenboorn.software/user/login", options)
+    let response = await fetch("http://localhost:5000/user/login", options)
+
     let data = await response.json()
-    if(response.ok) {
-      localStorage.setItem("user", JSON.stringify(data.user))
-      this.$router.push('Kwetter')
-    }
-    this.loginFailed = true
+    localStorage.setItem("authenticationToken", data.user.token)
+    console.log(localStorage.getItem("authenticationToken"))
   }
-  catch{this.stillLoggedIn = true} 
-  }
-  
 }
 }
 </script>
