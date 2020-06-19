@@ -5,3 +5,9 @@
 .newKwet{
     box-shadow: 3px 3px 15px gray;
 }
+.wrapper{
+    overflow-wrap: break-all;
+}
+.card-body{
+    width:"100%"
+}
