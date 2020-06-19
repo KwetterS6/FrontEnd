@@ -2,7 +2,7 @@ name: Node.js push on develop branch
 
 on:
   push:
-    branches: [develop]
+    branches: [feature/*]
 
 jobs:
   build:
@@ -42,26 +42,3 @@ jobs:
         with:
           name: kubernetes-artifact
           path: ./kube_develop
-  deliver:
-    needs: build
-    runs-on: ubuntu-18.04
-    steps:
-      # Download artifacts from GitHub workflow to use in this job
-      - name: Download release artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: release-artifact
-          path: ./build
-      - name: Download Dockerfile artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: dockerfile-artifact
-          path: .
-      # Deliver Docker image to Github packages
-      - name: Deliver Docker image
-        env:
-          CONTAINER_IMAGE: docker.pkg.github.com/kwetters6/frontend/frontend:${{ github.sha }}
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}"| docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} --password-stdin
-          docker build -t $CONTAINER_IMAGE .
-          docker push $CONTAINER_IMAGE
