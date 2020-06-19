@@ -118,7 +118,7 @@ export default {
       };
       try {
         var response = await fetch(
-          "http://localhost:5002/kwet",
+          "https://kwet.woutervandenboorn.software/kwet/",
           requestOptions
         );
         if (response.ok == false) {
@@ -131,7 +131,6 @@ export default {
     },
 
     async getKwets() {
-      console.log("getting kwets");
       const requestOptions = {
         method: "GET"
       };
@@ -146,7 +145,6 @@ export default {
     },
 
     async placeLike(kwet) {
-      console.log("placing Likes");
       var user = JSON.parse(localStorage.getItem("user"));
       const requestOptions = {
         method: "POST",
