@@ -16,7 +16,7 @@
       :show="registerSuccess"
       @dismissed="registerSuccess=false"
     >
-      <a href="Home" class="alert-link">Register success, please click this to continue to login!</a>.
+      <a href="/" class="alert-link">Register success, please click this to continue to login!</a>.
     </b-alert>
 
     <div class="form-group">
