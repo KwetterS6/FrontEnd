@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     Logout(){
-      console.log('Logging Out')
       localStorage.clear();
     }
   },

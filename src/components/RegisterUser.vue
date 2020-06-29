@@ -40,7 +40,7 @@
       />
     </div>
     <div class="form-group">
-      <label for="unputPassword">{{('Password')}}:</label>
+      <label for="inputPassword">{{('Password')}}:</label>
       <input
         v-model="password"
         type="password"

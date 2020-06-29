@@ -26,7 +26,7 @@
       />
     </div>
     <div class="form-group">
-            <label for="unputPassword">{{('Password')}}:</label>
+            <label for="inPutPassword">{{('Password')}}:</label>
             <input
               v-model="password"
               type="password"
@@ -60,7 +60,6 @@ methods:
   {
     var user = JSON.parse(localStorage.getItem("user"));
     try{
-      console.log(user)
       if (user != null){throw user}
     let options = 
     {
